@@ -4,20 +4,33 @@
 */
 
 const axios = require('axios');
+var weather = process.env.WEATHERURL;
+
+
 
 var weatherDataDaily = async (latatude,logdatude) => {
-  const responce = await axios.get(`https://api.darksky.net/forecast/4e9523e410dee31f761e0f332ef22c32/${latatude},${logdatude}?units=auto`);
+  console.log(weather + `${latatude},${logdatude}?units=auto`);
+  const responce = await axios.get(weather + `${latatude},${logdatude}?units=auto`);
   var theWeatherData = {
       summary: responce.data.daily.summary, //"Light rain on Friday, with high temperatures falling to 43°F on Thursday.",
       icon: responce.data.daily.icon, //"rain",
     };
   var daily = [];
     responce.data.daily.data.forEach((item) => {
+      var date = new Date(item.time*1000);
+      var sunDate = new Date(item.sunriseTime*1000);
+      var weatherImage = "";
+      if (true) {
+        weatherImage = item.icon.replace('night','day');
+      }
+      else{
+        weatherImage = item.icon;
+      }
       var data = {
-        time: item.time,
+        time: date,
         summary: item.summary,
-        icon: item.icon,
-        sunriseTime: item.sunriseTime,
+        icon: `./images/icons/${weatherImage}.svg`,
+        sunriseTime: sunDate,
         sunsetTime: item.sunsetTime,
         moonPhase: item.moonPhase,
         precipIntensity: item.precipIntensity,

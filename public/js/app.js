@@ -9,7 +9,7 @@
 		$(".menu-toggle").click(function(){
 			$(".mobile-navigation").slideToggle();
 		});
-
+		
 		setCurrentData();
 
 		var map = $(".map");
