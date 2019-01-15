@@ -74,6 +74,12 @@ function setCurrentData(){
     });
   });
 }
+
+function getTownImage(townName){
+  $.get('./image/' + townName, function(imageData){
+      
+  });
+}
 //   {{weekday}}
 //   {{day}}
 //   {{city}}
