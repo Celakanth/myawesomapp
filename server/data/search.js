@@ -7,12 +7,20 @@
 const axios = require('axios');
 var geolocateURL = process.env.SEARCH;
 var searchImage = async (enteredAddress) =>{
-  console.log(`${geolocateURL}${enteredAddress}`);
+
   const responce = await axios.get(`${geolocateURL}${enteredAddress}`);
-  console.log(responce.data.items[0].pagemap.cse_image[0].src);
-  return {
-    imageurl: responce.data.items[0].pagemap.cse_image[0].src
-  }
-}
+  console.log(responce.data.items[0]);
+  if (responce.data.items[0].pagemap.cse_image.length > 0 ) {
+      return {
+            imageurl: responce.data.items[0].pagemap.cse_image[0].src
+        }
+      }
+    else{
+      return {
+            imageurl: responce.data.items[0].pagemap.cse_image[0].src
+        }
+      }
+    }
+  
 
 module.exports = {searchImage}

@@ -1,3 +1,6 @@
+/*
+	javascript app controll file to call the different functions
+*/
 (function($, document, window){
 
 	$(document).ready(function(){
@@ -9,7 +12,7 @@
 		$(".menu-toggle").click(function(){
 			$(".mobile-navigation").slideToggle();
 		});
-		
+
 		setCurrentData();
 
 		var map = $(".map");
