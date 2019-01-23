@@ -12,6 +12,7 @@ var session = require('express-session');
 const {weatherData, weatherDataDaily} = require('./data/weather');
 const {geocodeAddress, getcityName} = require('./data/geocode');
 const {searchImage} = require('./data/search');
+const {youtubeVideo} = require('./data/youtube');
 
 
 
@@ -66,7 +67,7 @@ app.use(express.static(publicPath));
  });
 
  app.get('/image/:search', (req,res) => {
-   var search = req.params.search; 
+   var search = req.params.search;
    searchImage(search).then((searchres) => {
      res.send(searchres);
    });
@@ -78,7 +79,29 @@ app.use(express.static(publicPath));
    getcityName(lats,longs).then((cityResponce) =>{
      res.send(cityResponce);
    })
- })
+ });
+
+ app.get('/youtube/:search', (req,res) => {
+   var search = req.params.search;
+   var videos = [];
+   var searchData = new youtubeVideo();
+   searchData.searchYoutube(search).then((videoResults) => {
+     videoResults.forEach((item) => {
+       var itemData = {
+         id: item.raw.id.videoId,
+         title: item.raw.snippet.title,
+         description: item.raw.snippet.description,
+         thumbnail: item.raw.snippet.thumbnails.default.url,
+         videoUrl: `https://www.youtube.com/watch?v=${item.raw.id.videoId}`
+       }
+       videos.push(itemData);
+     })
+      console.log(videoResults[0].raw);
+      res.send(videos);
+   });
+
+
+ });
 
 app.listen(port, () => {
   console.log(`Server is running on ${port}`);
