@@ -9,7 +9,6 @@ var weather = process.env.WEATHERURL;
 
 
 var weatherDataDaily = async (latatude,logdatude) => {
-  console.log(weather + `${latatude},${logdatude}?units=auto`);
   const responce = await axios.get(weather + `${latatude},${logdatude}?units=auto`);
   var theWeatherData = {
       summary: responce.data.daily.summary, //"Light rain on Friday, with high temperatures falling to 43°F on Thursday.",
@@ -74,7 +73,7 @@ var weatherDataDaily = async (latatude,logdatude) => {
   };
 
 var weatherData = async (latatude,logdatude) => {
-  const responce = await axios.get(`https://api.darksky.net/forecast/4e9523e410dee31f761e0f332ef22c32/${latatude},${logdatude}?units=auto`);
+  const responce = await axios.get(`${weather}${latatude},${logdatude}?units=auto`);
   return {
             summary: responce.data.summary, //"Light rain on Friday, with high temperatures falling to 43°F on Thursday.",
             icon: responce.data.icon //"rain",

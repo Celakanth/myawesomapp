@@ -55,7 +55,7 @@
 			<div class="hero" data-bg-image="images/banner.png" id='ScreenImage'>
 				<div class="container">
 					<form id='getLocation' class="find-location" autocomplete="off">
-						<input autocomplete="no" type="text" id='search' placeholder="Find your location...">
+						<input autocomplete="false" type="text" id='search' placeholder="Find your location...">
 						<input type="submit" value="Find">
 					</form>
 
@@ -71,37 +71,10 @@
 			<main class="main-content">
 				<div class="fullwidth-block">
 					<div class="container">
-						<h2 class="section-title">Live cameras</h2>
-						<div class="row">
-							<div class="col-md-3 col-sm-6">
-								<div class="live-camera">
-									<figure class="live-camera-cover"><img src="images/live-camera-1.jpg" alt=""></figure>
-									<h3 class="location">New York</h3>
-									<small class="date">8 oct, 8:00AM</small>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="live-camera">
-									<figure class="live-camera-cover"><img src="images/live-camera-2.jpg" alt=""></figure>
-									<h3 class="location">Los Angeles</h3>
-									<small class="date">8 oct, 8:00AM</small>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="live-camera">
-									<figure class="live-camera-cover"><img src="images/live-camera-3.jpg" alt=""></figure>
-									<h3 class="location">Chicago</h3>
-									<small class="date">8 oct, 8:00AM</small>
-								</div>
-							</div>
-							<div class="col-md-3 col-sm-6">
-								<div class="live-camera">
-									<figure class="live-camera-cover"><img src="images/live-camera-4.jpg" alt=""></figure>
-									<h3 class="location">London</h3>
-									<small class="date">8 oct, 8:00AM</small>
-								</div>
-							</div>
-						</div>
+						<h2 class="section-title"><p id='town'>Latest Videos</p></h2>
+						<ul class="row" id='videos'>
+
+						</ul>
 					</div>
 				</div>
 
@@ -217,7 +190,7 @@
           <div class="date">{{day}}</div>
         </div> <!-- .forecast-header -->
         <div class="forecast-content">
-          <div class="location">{{city}}</div>
+          <div class="location" id='location'>{{city}}</div>
           <div class="degree">
             <div class="num">{{current}}<sup>o</sup>C</div>
             <div class="forecast-icon">
@@ -246,7 +219,13 @@
     </script>
 
 		<script type="text/template" id='video_template'>
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/dHf7xi4YNXo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<li class="col-md-3 col-sm-6" style='list-style: none;'>
+				<div class="live-camera">
+					<iframe width="280" height="315" src="https://www.youtube.com/embed/{{id}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					<h3 class="location">{{title}}</h3>
+					<small class="date">{{description}}</small>
+				</div>
+			</li>
 		</script>
 <!---- End script templates -->
 		<script src="js/jquery-1.11.1.min.js"></script>

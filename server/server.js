@@ -96,7 +96,6 @@ app.use(express.static(publicPath));
        }
        videos.push(itemData);
      })
-      console.log(videoResults[0].raw);
       res.send(videos);
    });
 

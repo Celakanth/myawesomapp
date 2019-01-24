@@ -37,6 +37,7 @@ function getLocation(address){
           $('#weatherList').append(html);
         };
         getTownName(data.lat,data.long);
+
       });
     });
   }
@@ -58,6 +59,7 @@ function setCurrentData(){
       $.get('./location/' + position.coords.latitude + ',' + position.coords.longitude, function(locationData){
         $.get('./weather/' + position.coords.latitude + '/' + position.coords.longitude, function(weatherData,status){
           for(var i=0; i < weatherData.daily.length; i++){
+            console.log(weatherData);
           var weatherToday = new Date(moment(weatherData.daily[i].time)).getDate();
           var Today = new Date().getDate();
 
@@ -100,6 +102,7 @@ function getTownImage(searchData){
   $.get('./image/' + searchData.cityName, function(imageData){
       $('#ScreenImage').css("background-image", "url(" + imageData.imageurl + ")");
   });
+  loadVideos(searchData.cityName);
 }
 
 function getTownName(lat,long){
@@ -108,7 +111,25 @@ function getTownName(lat,long){
   var theUrl = './townName/' + theLat + '/' + theLong;
   $.get(theUrl, function(townName){
     getTownImage(townName);
-  })
+  });
+}
+
+function loadVideos(search){
+  var template = $('#video_template').html();
+  $('#videos').html('');
+  $.get('./youtube/' + search, function(results){
+    results.forEach(function(item) {
+      var html = Mustache.render(template,{
+        id: item.id,
+        title: item.title,
+        description: item.description
+      });
+      $('#videos').append(html);
+    })
+  });
+  $('.ytp-title-channel-logo').fadeOut();
+  $('#town').html('Latest Videos from ' + search);
+  $('#location').html(search);
 }
 //   {{weekday}}
 //   {{day}}
