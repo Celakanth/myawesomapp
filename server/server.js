@@ -36,7 +36,7 @@ var requireHTTPS = (req, res, next) => {
   }
   next();
 };
-app.use(requireHTTPS);
+//app.use(requireHTTPS);
 app.use(express.static(publicPath));
 
 //weatherDataDaily(51.439770599999996,-3.1815661);
