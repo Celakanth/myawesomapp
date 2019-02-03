@@ -80,7 +80,7 @@
 
 				<div class="fullwidth-block" data-bg-color="#262936">
 					<div class="container">
-						<div class="row">
+						<div class="row" id="newsData">
 							<div class="col-md-4">
 								<div class="news">
 									<div class="date">06.10</div>
@@ -227,6 +227,18 @@
 				</div>
 			</li>
 		</script>
+
+		<script type="text/template" id="news_template">
+			<div class="col-md-4">
+				<div class="news">
+					<div class="date">{{date}}</div>
+					<h3><a href="{{url}}">{{title}}</a></h3>
+					<p>{{description}}</p>
+				</div>
+			</div>
+		</script>
+
+
 <!---- End script templates -->
 		<script src="js/jquery-1.11.1.min.js"></script>
 		<script src="js/plugins.js"></script>
