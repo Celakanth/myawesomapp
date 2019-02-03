@@ -13,6 +13,7 @@ const {weatherData, weatherDataDaily} = require('./data/weather');
 const {geocodeAddress, getcityName} = require('./data/geocode');
 const {searchImage} = require('./data/search');
 const {youtubeVideo} = require('./data/youtube');
+const {getNews} = require('./data/news');
 
 
 
@@ -108,6 +109,16 @@ app.use(express.static(publicPath));
 
 
  });
+
+ app.get('/news/:town', (req,res) => {
+   var search = req.params.town;
+   getNews(search).then((theNews) => {
+    res.send(theNews);
+   }).catch((err) => {
+     console.log(err)
+   });
+   
+ })
 
 app.listen(port, () => {
   console.log(`Server is running on ${port}`);

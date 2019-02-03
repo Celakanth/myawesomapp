@@ -37,6 +37,7 @@ function getLocation(address){
           $('#weatherList').append(html);
         };
         getTownName(data.lat,data.long);
+        
 
       });
     });
@@ -59,39 +60,39 @@ function setCurrentData(){
       $.get('./location/' + position.coords.latitude + ',' + position.coords.longitude, function(locationData){
         $.get('./weather/' + position.coords.latitude + '/' + position.coords.longitude, function(weatherData,status){
           for(var i=0; i < weatherData.daily.length; i++){
-            console.log(weatherData);
-          var weatherToday = new Date(moment(weatherData.daily[i].time)).getDate();
-          var Today = new Date().getDate();
+              
+            var weatherToday = new Date(moment(weatherData.daily[i].time)).getDate();
+            var Today = new Date().getDate();
 
-          if (Today ==  weatherToday) {
-            var template = $('#WeatherCurrent').html();
-            var html = Mustache.render(template,{
-              weekday: moment(weatherData.daily[i].time).format('dddd'),
-              day: moment(weatherData.daily[i].time).format('Do MMM'),
-              city: weatherData.address,
-              current: parseInt(weatherData.daily[i].apparentTemperatureHigh),
-              percipitation: parseInt(weatherData.daily[i].precipProbability),
-              windSpeed: weatherData.daily[i].windSpeed,
-              windDirection: weatherData.daily[i].windBearing,
-              icon: weatherData.daily[i].icon
-            });
-            $('#weatherList').append(html);
-          }
-          else {
-            var template = $('#weatherDaily').html();
-            var date = new Date(weatherData.daily[i].time);
-            var html = Mustache.render(template,{
-              day: moment(weatherData.daily[i].time).format('dddd'),
-              high: parseInt(weatherData.daily[i].apparentTemperatureMax),
-              low: parseInt(weatherData.daily[i].apparentTemperatureMin),
-              icon: weatherData.daily[i].icon
-              //day: item.time
-            });
-            $('#weatherList').append(html);
-          }
-        };
+            if (Today ==  weatherToday) {
+              var template = $('#WeatherCurrent').html();
+              var html = Mustache.render(template,{
+                weekday: moment(weatherData.daily[i].time).format('dddd'),
+                day: moment(weatherData.daily[i].time).format('Do MMM'),
+                city: weatherData.address,
+                current: parseInt(weatherData.daily[i].apparentTemperatureHigh),
+                percipitation: parseInt(weatherData.daily[i].precipProbability),
+                windSpeed: weatherData.daily[i].windSpeed,
+                windDirection: weatherData.daily[i].windBearing,
+                icon: weatherData.daily[i].icon
+              });
+              $('#weatherList').append(html);
+            }
+            else {
+              var template = $('#weatherDaily').html();
+              var date = new Date(weatherData.daily[i].time);
+              var html = Mustache.render(template,{
+                day: moment(weatherData.daily[i].time).format('dddd'),
+                high: parseInt(weatherData.daily[i].apparentTemperatureMax),
+                low: parseInt(weatherData.daily[i].apparentTemperatureMin),
+                icon: weatherData.daily[i].icon
+                //day: item.time
+              });
+              $('#weatherList').append(html);
+            }
+          };
+        });
       });
-    });
     var lat = position.coords.latitude;
     var long = position.coords.longitude;
     getTownName(lat,long);
@@ -103,6 +104,7 @@ function getTownImage(searchData){
       $('#ScreenImage').css("background-image", "url(" + imageData.imageurl + ")");
   });
   loadVideos(searchData.cityName);
+  setNews(searchData.cityName);
 }
 
 function getTownName(lat,long){
@@ -111,6 +113,7 @@ function getTownName(lat,long){
   var theUrl = './townName/' + theLat + '/' + theLong;
   $.get(theUrl, function(townName){
     getTownImage(townName);
+   
   });
 }
 
@@ -130,6 +133,25 @@ function loadVideos(search){
   $('.ytp-title-channel-logo').fadeOut();
   $('#town').html('Latest Videos from ' + search);
   $('#location').html(search);
+}
+
+function setNews(search){
+  var template = $('#news_template').html();
+  var newsData = "";
+  $('#newsData').html('');
+  $.get('./news/' + search, function(responce){
+  for(var i = 0; i < 3; i++){
+     var html = Mustache.render(template,{
+          date: moment(responce[i].date).format('DD MM'),
+          title: responce[i].title,
+          url: responce[i].url,
+          description: responce[i].description
+        });
+        newsData = newsData + html;
+        
+    }
+    $('#newsData').html(newsData);
+  })
 }
 //   {{weekday}}
 //   {{day}}
