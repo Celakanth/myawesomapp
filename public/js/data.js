@@ -140,14 +140,17 @@ function setNews(search){
   var newsData = "";
   $('#newsData').html('');
   $.get('./news/' + search, function(responce){
+    
   for(var i = 0; i < 3; i++){
+    if(i < responce.length){
      var html = Mustache.render(template,{
-          date: moment(responce[i].date).format('DD MM'),
+          date: moment(responce[i].publisheddate).format('DD MM'),
           title: responce[i].title,
           url: responce[i].url,
           description: responce[i].description
         });
         newsData = newsData + html;
+      }
         
     }
     $('#newsData').html(newsData);
