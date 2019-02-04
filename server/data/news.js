@@ -11,6 +11,7 @@ var newsUrl = process.env.NEWS;
 var news = [];
 
 var getNews = async (search) => {
+  console.log(`${newsUrl}${search}`)
   const responce = await axios.get(`${newsUrl}${search}`);
   responce.data.articles.forEach(newsItem => {
     var article ={
