@@ -6,6 +6,10 @@
 const axios = require('axios');
 var weather = process.env.WEATHERURL;
 
+//database 
+const mongoose = require('mongoose');
+const Schema = moongoose.Schema;
+
 
 
 var weatherDataDaily = async (latatude,logdatude) => {
@@ -81,4 +85,46 @@ var weatherData = async (latatude,logdatude) => {
 
 };
 
-module.exports = {weatherDataDaily, weatherData};
+var WeatherStructure = new Schema({
+        time: {type: Date, default: Date.now},
+        summary: String,
+        icon: { data: Buffer, contentType: String },
+        sunriseTime: {type: Date, default: Date.now},
+        sunsetTime: {type: Date, default: Date.now},
+        moonPhase: String,
+        precipIntensity: Number,
+        precipIntensityMax: Number,
+        precipIntensityMaxTime: {type: Date, default: Date.now},
+        precipProbability: Number,
+        precipType: String,
+        temperatureHigh: Number,
+        temperatureHighTime: {type: Date, default: Date.now},
+        temperatureLow: Number,
+        temperatureLowTime: {type: Date, default: Date.now},
+        apparentTemperatureHigh: Number,
+        apparentTemperatureHighTime: Number,
+        apparentTemperatureLow: Number,
+        apparentTemperatureLowTime: Number,
+        dewPoint: Number,
+        humidity: Number,
+        pressure: Number,
+        windSpeed: Number,
+        windGust: Number,
+        windGustTime: Number,
+        windBearing: Number,
+        cloudCover: Number,
+        uvIndex: Number,
+        uvIndexTime: {type: Date, default: Date.now},
+        visibility: Number,
+        ozone: Number,
+        temperatureMin: Number,
+        temperatureMinTime: {type: Date, default: Date.now},
+        temperatureMax: Number,
+        temperatureMaxTime: {type: Date, default: Date.now},
+        apparentTemperatureMin: Number,
+        apparentTemperatureMinTime: {type: Date, default: Date.now},
+        apparentTemperatureMax: Number,
+        apparentTemperatureMaxTime: {type: Date, default: Date.now}
+})
+
+module.exports = {weatherDataDaily, weatherData, WeatherStructure};

@@ -9,7 +9,7 @@ require('../config/config')
 const express = require("express");
 var session = require('express-session');
 
-const {weatherData, weatherDataDaily} = require('./data/weather');
+const {weatherData, weatherDataDaily, WeatherStructure} = require('./data/weather');
 const {geocodeAddress, getcityName} = require('./data/geocode');
 const {searchImage} = require('./data/search');
 const {youtubeVideo} = require('./data/youtube');
@@ -63,13 +63,18 @@ app.use(express.static(publicPath));
    var lats = req.params.lat;
    var long = req.params.long;
 
+   const WeatherDatas = new WeatherStructure;
+
+
+
    ssn = req.session;
    ssn.lasObject = {
      lat: req.params.lat,
      lng: req.params.long
    }
 
-   weatherDataDaily(lats,long).then((weather) => {
+   weatherDataDaily(lats, long).then((weather) => {
+     WeatherDatas = new mongoose
      res.send(weather);
    });
  });
