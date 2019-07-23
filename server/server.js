@@ -22,22 +22,6 @@ const path = require('path');
 const port = process.env.PORT ||  3000;
 var publicPath = path.join(__dirname, "../public");
 
-app.use(session({
-  secret:'XASDASDA',
-  proxy: true,
-  resave: true,
-  saveUninitialized: true
-}));
-
-
-var requireHTTPS = (req, res, next) => {
-  // The 'x-forwarded-proto' check is for Heroku
-  if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV !== "development") {
-    return res.redirect('https://' + req.get('host') + req.url);
-  }
-  next();
-};
-//app.use(requireHTTPS);
 app.use(express.static(publicPath));
 
 //weatherDataDaily(51.439770599999996,-3.1815661);
@@ -51,9 +35,6 @@ app.use(express.static(publicPath));
 
  app.get('/location/:address', (req,res) =>{
    var address = req.params.address;
-   ssn = req.session;
-
-   ssn.address = req.params.address;
    geocodeAddress(address).then((location) => {
      res.send(location);
    });
@@ -63,13 +44,7 @@ app.use(express.static(publicPath));
    var lats = req.params.lat;
    var long = req.params.long;
 
-   ssn = req.session;
-   ssn.lasObject = {
-     lat: req.params.lat,
-     lng: req.params.long
-   }
-
-   weatherDataDaily(lats,long).then((weather) => {
+   weatherDataDaily(lats, long).then((weather) => {
      res.send(weather);
    });
  });

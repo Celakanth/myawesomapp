@@ -6,6 +6,10 @@
 const axios = require('axios');
 var weather = process.env.WEATHERURL;
 
+//database 
+//const mongoose = require('mongoose');
+//const Schema = moongoose.Schema;
+
 
 
 var weatherDataDaily = async (latatude,logdatude) => {
