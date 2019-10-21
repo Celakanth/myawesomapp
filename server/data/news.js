@@ -11,9 +11,9 @@ var newsUrl = process.env.NEWS;
 var news = [];
 
 var getNews = async (search) => {
-  console.log(`${newsUrl}${search}&from=${theDate()}&sortBy=publishedAt`)
+  //console.log(`${newsUrl}${search}&from=${theDate()}&sortBy=publishedAt`)
   news = [];
-  const responce = await axios.get(`${newsUrl}${search}&from=${theDate()}&sortBy=publishedAt`);
+  const responce = await axios.get(`${newsUrl}&q=${search}&from=${theDate()}&sortBy=publishedAt`);
   responce.data.articles.forEach(newsItem => {
     var article ={
       publisheddate: newsItem.publishedAt,
@@ -28,7 +28,7 @@ var getNews = async (search) => {
 
 var theDate = () =>{
   var today = new Date();
-  var dd = today.getDate() - 1;
+  var dd = today.getDate() - 5;
   var mm = today.getMonth() + 1; //January is 0!
 
   var yyyy = today.getFullYear();

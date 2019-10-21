@@ -9,7 +9,7 @@ require('../config/config')
 const express = require("express");
 var session = require('express-session');
 
-const {weatherData, weatherDataDaily} = require('./data/weather');
+const {weatherData, weatherDataDaily, weatherHourly} = require('./data/weather');
 const {geocodeAddress, getcityName} = require('./data/geocode');
 const {searchImage} = require('./data/search');
 const {youtubeVideo} = require('./data/youtube');
@@ -49,6 +49,17 @@ app.use(express.static(publicPath));
    });
  });
 
+ app.get('/weatherHourly/:lat/:long', (req,res) => {
+  var lats = req.params.lat;
+  var long = req.params.long;
+  weatherHourly(lats, long).then((hourlyWeather) => {
+    res.send(hourlyWeather);
+  })
+
+
+ })
+
+
  app.get('/image/:search', (req,res) => {
    var search = req.params.search;
    searchImage(search).then((searchres) => {
@@ -69,6 +80,7 @@ app.use(express.static(publicPath));
    var videos = [];
    var searchData = new youtubeVideo();
    searchData.searchYoutube(search).then((videoResults) => {
+     //console.log(videoResults)
      videoResults.forEach((item) => {
        var itemData = {
          id: item.raw.id.videoId,

@@ -76,6 +76,26 @@ var weatherDataDaily = async (latatude,logdatude) => {
     return theWeatherData;
   };
 
+  var weatherHourly = async (latatude,logdatude) => {
+    var hourlyData = [];
+    const responce = await axios.get(weather + `${latatude},${logdatude}?units=auto`);
+    responce.data.hourly.data.forEach((item) => {
+      var date = new Date(item.time*1000);
+      weatherImage = item.icon.replace('night','day');
+      var conditions = {
+        time: date,
+        summary: item.summary,
+        icon: weatherImage,
+        precipIntensity: item.precipIntensity,
+        precipProbability: item.precipProbability,
+        temperature: item.temperature,
+        cloudCover: item.cloudCover
+      }
+      hourlyData.push(conditions);
+    })
+    return hourlyData;
+  }
+
 var weatherData = async (latatude,logdatude) => {
   const responce = await axios.get(`${weather}${latatude},${logdatude}?units=auto`);
   return {
@@ -85,4 +105,4 @@ var weatherData = async (latatude,logdatude) => {
 
 };
 
-module.exports = {weatherDataDaily, weatherData};
+module.exports = {weatherDataDaily, weatherData, weatherHourly};

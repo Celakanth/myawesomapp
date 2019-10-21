@@ -14,6 +14,7 @@ class youtubeVideo{
   };
 
 searchYoutube(search){
+  //console.log('The key is',youtubeKey)
   return youtube.searchVideos(search, 4).then().catch(console.log);
 
   };
