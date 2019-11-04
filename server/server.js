@@ -108,9 +108,19 @@ app.use(express.static(publicPath));
    });
    
  })
- https.createServer({
-  key: fs.readFileSync('celakanth.key'),
-  cert: fs.readFileSync('celakanth.cert')
-}, app).listen(port, () => {
-  console.log(`Server is running on ${port}`);
-});
+ try{
+  https.createServer({
+   key: fs.readFileSync('celakanth.key'),
+    cert: fs.readFileSync('celakanth.cert')
+  }, app).listen(port, () => {
+    console.log(`Server is running https on ${port}`);
+  });
+ }
+ catch(err)
+ {
+  app.listen(port, () => {
+    console.log(`Server is running http on ${port}`);
+  });
+ }
+ 
+ 
