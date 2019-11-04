@@ -5,6 +5,8 @@
 */
 
 require('../config/config')
+const fs = require('fs')
+const https = require('https')
 
 const express = require("express");
 var session = require('express-session');
@@ -80,7 +82,7 @@ app.use(express.static(publicPath));
    var videos = [];
    var searchData = new youtubeVideo();
    searchData.searchYoutube(search).then((videoResults) => {
-     //console.log(videoResults)
+     console.log(videoResults)
      videoResults.forEach((item) => {
        var itemData = {
          id: item.raw.id.videoId,
@@ -106,7 +108,9 @@ app.use(express.static(publicPath));
    });
    
  })
-
-app.listen(port, () => {
+ https.createServer({
+  key: fs.readFileSync('celakanth.key'),
+  cert: fs.readFileSync('celakanth.cert')
+}, app).listen(port, () => {
   console.log(`Server is running on ${port}`);
 });
