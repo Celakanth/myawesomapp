@@ -24,7 +24,7 @@ const path = require('path');
 const port = process.env.PORT ||  3000;
 var publicPath = path.join(__dirname, "../public");
 
-app.use(express.static(publicPath));
+app.use(express.static(publicPath, { extensions: ['html'] }));
 
 //weatherDataDaily(51.439770599999996,-3.1815661);
 
