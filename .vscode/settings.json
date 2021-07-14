@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/23304a05-454c-430f-be87-7c5c269a70e1/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/celakanth-linux",
+    "appService.deploySubpath": "."
+}

@@ -13,7 +13,7 @@
     "axios": "^0.21.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "mongoose": "^5.7.5",
+    "mongoose": "^5.13.2",
     "nodemon": "^1.18.9",
     "simple-youtube-api": "^5.2.1"
   }
